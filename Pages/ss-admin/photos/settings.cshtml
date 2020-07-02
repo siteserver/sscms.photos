@@ -1,0 +1,28 @@
+@page
+@{ Layout = "_Layout"; }
+
+<div style="height: 10px"></div>
+
+<el-form ref="form" v-if="settings" :model="settings" size="small" label-width="180px">
+  <el-form-item label="缩略图（小）最大宽度" prop="photoSmallWidth" name="photoSmallWidth" :rules="{ required: true }">
+    <el-input v-model.number="settings.photoSmallWidth"></el-input>
+    <div class="tips">（单位：像素）</div>
+  </el-form-item>
+  <el-form-item label="缩略图（中）最大宽度" prop="photoMiddleWidth" name="photoMiddleWidth" :rules="{ required: true }">
+    <el-input v-model.number="settings.photoMiddleWidth"></el-input>
+    <div class="tips">（单位：像素）</div>
+  </el-form-item>
+</el-form>
+
+<div style="text-align: center;">
+  <el-divider></el-divider>
+  <div style="height: 10px"></div>
+  
+  <el-button size="small" type="primary" v-on:click="btnSubmitClick">
+    保 存
+  </el-button>
+</div>
+
+@section Scripts{
+  <script src="/assets/photos/js/settings.js" type="text/javascript"></script>
+}
