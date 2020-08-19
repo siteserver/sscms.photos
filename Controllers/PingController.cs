@@ -2,7 +2,7 @@
 
 namespace SSCMS.Photos.Controllers
 {
-    [Route("api/photo/ping")]
+    [Route("api/photos/ping")]
     public class PingController : ControllerBase
     {
         private const string Route = "";

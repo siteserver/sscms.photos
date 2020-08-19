@@ -25,20 +25,25 @@
     "permissions": {
       "photos_settings": {
         "text": "图片上传设置",
-        "type": "site"
+        "type": ["web", "wx"]
+      },
+      "photos_channels_config": {
+        "text": "内容图片设置",
+        "type": ["web", "wx"]
       },
       "photos_content": {
         "text": "内容相册",
-        "type": "content"
+        "type": ["content"]
       }
     },
     "menus": {
       "photos_all": {
         "text": "内容相册",
         "iconClass": "ion-images",
-        "type": "site",
+        "type": ["web", "wx"],
         "permissions": [
-          "photos_settings"
+          "photos_settings",
+          "photos_channels_config"
         ],
         "menus": {
           "photos_settings": {
@@ -46,12 +51,18 @@
             "link": "/ss-admin/photos/settings/",
             "permissions": ["photos_settings"],
             "order": 1
+          },
+          "photos_channels_config": {
+            "text": "内容图片设置",
+            "link": "/ss-admin/plugins/config/?pluginId=sscms.photos",
+            "permissions": ["photos_channels_config"],
+            "order": 2
           }
         }
       },
       "photos_content": {
         "text": "内容相册",
-        "type": "content",
+        "type": ["content"],
         "link": "/ss-admin/photos/photos/",
         "permissions": ["photos_content"],
         "order": 1
