@@ -1,6 +1,6 @@
 ﻿using System.Text;
 using System.Threading.Tasks;
-using SSCMS.Context;
+using SSCMS.Parse;
 using SSCMS.Photos.Abstractions;
 using SSCMS.Plugins;
 using SSCMS.Repositories;

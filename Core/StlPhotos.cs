@@ -1,7 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using SSCMS.Context;
+using SSCMS.Parse;
 using SSCMS.Photos.Abstractions;
 using SSCMS.Photos.Models;
 using SSCMS.Plugins;

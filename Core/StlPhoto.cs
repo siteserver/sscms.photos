@@ -1,6 +1,6 @@
 ﻿using System.Collections.Specialized;
 using System.Threading.Tasks;
-using SSCMS.Context;
+using SSCMS.Parse;
 using SSCMS.Photos.Models;
 using SSCMS.Plugins;
 using SSCMS.Repositories;

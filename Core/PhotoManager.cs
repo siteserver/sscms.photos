@@ -2,6 +2,7 @@
 using SSCMS.Models;
 using SSCMS.Photos.Abstractions;
 using SSCMS.Photos.Models;
+using SSCMS.Plugins;
 using SSCMS.Repositories;
 using SSCMS.Services;
 using SSCMS.Utils;
@@ -102,7 +103,7 @@ namespace SSCMS.Photos.Core
             var smallUrl = largeUrl;
             var middleUrl = largeUrl;
 
-            var (width, height) = ImageUtils.GetSize(filePath);
+            var (width, height) = _pathManager.GetImageSize(filePath);
 
             if (width > settings.PhotoSmallWidth)
             {
@@ -134,7 +135,7 @@ namespace SSCMS.Photos.Core
             var resizeFileName = $"{PathUtils.GetFileNameWithoutExtension(filePath)}_{maxWidth}{PathUtils.GetExtension(filePath)}";
             var resizeFilePath = PathUtils.Combine(DirectoryUtils.GetDirectoryPath(filePath), resizeFileName);
 
-            ImageUtils.Resize(filePath, resizeFilePath, maxWidth, height);
+            _pathManager.ResizeImage(filePath, resizeFilePath, maxWidth, height);
 
             return await _pathManager.GetVirtualUrlByPhysicalPathAsync(site, resizeFilePath);
         }
