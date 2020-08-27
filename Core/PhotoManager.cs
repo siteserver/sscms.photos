@@ -2,7 +2,6 @@
 using SSCMS.Models;
 using SSCMS.Photos.Abstractions;
 using SSCMS.Photos.Models;
-using SSCMS.Plugins;
 using SSCMS.Repositories;
 using SSCMS.Services;
 using SSCMS.Utils;
@@ -11,33 +10,30 @@ namespace SSCMS.Photos.Core
 {
     public class PhotoManager : IPhotoManager
     {
+        public const string PluginId = "sscms.photos";
         public const string PermissionsSettings = "photos_settings";
 
         private readonly IPathManager _pathManager;
-        private readonly IPlugin _plugin;
         private readonly IPluginConfigRepository _pluginConfigRepository;
         private readonly ISiteRepository _siteRepository;
         private readonly IPhotoRepository _photoRepository;
 
-        public PhotoManager(IPathManager pathManager, IPluginManager pluginManager, IPluginConfigRepository pluginConfigRepository, ISiteRepository siteRepository, IPhotoRepository photoRepository)
+        public PhotoManager(IPathManager pathManager, IPluginConfigRepository pluginConfigRepository, ISiteRepository siteRepository, IPhotoRepository photoRepository)
         {
             _pathManager = pathManager;
             _pluginConfigRepository = pluginConfigRepository;
-            _plugin = pluginManager.Current;
             _siteRepository = siteRepository;
             _photoRepository = photoRepository;
         }
 
         public async Task<Settings> GetSettingsAsync(int siteId)
         {
-            var pluginId = _plugin.PluginId;
-            return await _pluginConfigRepository.GetConfigAsync<Settings>(pluginId, siteId) ?? new Settings();
+            return await _pluginConfigRepository.GetConfigAsync<Settings>(PluginId, siteId) ?? new Settings();
         }
 
         public async Task<bool> SetSettingsAsync(int siteId, Settings settings)
         {
-            var pluginId = _plugin.PluginId;
-            return await _pluginConfigRepository.SetConfigAsync(pluginId, siteId, settings);
+            return await _pluginConfigRepository.SetConfigAsync(PluginId, siteId, settings);
         }
 
         public async Task DeletePhotosAsync(int siteId, int channelId, int contentId)
