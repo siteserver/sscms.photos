@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SSCMS.Configuration;
 using SSCMS.Dto;
-using SSCMS.Extensions;
 using SSCMS.Photos.Abstractions;
 using SSCMS.Repositories;
 using SSCMS.Services;
@@ -57,6 +56,7 @@ namespace SSCMS.Photos.Controllers.Admin
             };
         }
 
+        [RequestSizeLimit(long.MaxValue)]
         [HttpPost, Route(RouteUpload)]
         public async Task<ActionResult<SubmitResult>> Upload([FromQuery] ContentRequest request, [FromForm] IFormFile file)
         {
@@ -82,6 +82,7 @@ namespace SSCMS.Photos.Controllers.Admin
             var filePath = PathUtils.Combine(localDirectoryPath, localFileName);
 
             await _pathManager.UploadAsync(file, filePath);
+            await _pathManager.AddWaterMarkAsync(site, filePath);
 
             var photo = await _photoManager.InsertPhotoAsync(site, filePath, request.SiteId, request.ChannelId, request.ContentId);
 
