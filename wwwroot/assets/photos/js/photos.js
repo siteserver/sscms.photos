@@ -42,6 +42,7 @@ var methods = {
     $api.delete($url, {
       data: {
         siteId: this.siteId,
+        channelId: this.channelId,
         photoId: photo.id
       }
     }).then(function (response) {
@@ -61,6 +62,7 @@ var methods = {
     utils.loading(this, true);
     $api.put($url, {
       siteId: this.siteId,
+      channelId: this.channelId,
       photoId: photo.id,
       type: 'description',
       description: photo.description
@@ -81,6 +83,7 @@ var methods = {
     utils.loading(this, true);
     $api.put($url, {
       siteId: this.siteId,
+      channelId: this.channelId,
       photoId: photo.id,
       type: 'taxis',
       photoIds: photoIds
@@ -156,6 +159,29 @@ var methods = {
     list.splice(list.indexOf(largeUrl), 1);
     list.splice(0, 0, largeUrl);
     return list;
+  },
+
+  btnEditClick: function (photo) {
+    utils.openLayer({
+      title: '修改图片',
+      url: utils.getPageUrl('photos', 'photosLayerAdd', {
+        siteId: this.siteId,
+        channelId: this.channelId,
+        contentId: this.contentId,
+        photoId: photo.id
+      })
+    });
+  },
+
+  btnAddClick: function () {
+    utils.openLayer({
+      title: '新增图片',
+      url: utils.getPageUrl('photos', 'photosLayerAdd', {
+        siteId: this.siteId,
+        channelId: this.channelId,
+        contentId: this.contentId,
+      })
+    });
   },
 
   btnDescriptionClick: function(photo) {

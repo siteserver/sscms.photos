@@ -1,14 +1,12 @@
-﻿using System.IO;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using SSCMS.Configuration;
 using SSCMS.Dto;
 using SSCMS.Photos.Abstractions;
+using SSCMS.Photos.Models;
 using SSCMS.Repositories;
 using SSCMS.Services;
-using SSCMS.Utils;
 
 namespace SSCMS.Photos.Controllers.Admin
 {
@@ -34,99 +32,32 @@ namespace SSCMS.Photos.Controllers.Admin
             _photoRepository = photoRepository;
         }
 
-        [HttpGet, Route(Route)]
-        public async Task<ActionResult<GetResult>> Get([FromQuery] ContentRequest request)
+        public class ContentRequest : ChannelRequest
         {
-            if (!await _authManager.IsSiteAdminAsync(request.SiteId)) return Unauthorized();
-
-            var site = await _siteRepository.GetAsync(request.SiteId);
-
-            var photos = await _photoRepository.GetPhotosAsync(request.SiteId, request.ChannelId, request.ContentId);
-
-            foreach (var photo in photos)
-            {
-                photo.LargeUrl = await _pathManager.ParseSiteUrlAsync(site, photo.LargeUrl, true);
-                photo.MiddleUrl = await _pathManager.ParseSiteUrlAsync(site, photo.MiddleUrl, true);
-                photo.SmallUrl = await _pathManager.ParseSiteUrlAsync(site, photo.SmallUrl, true);
-            }
-
-            return new GetResult
-            {
-                Photos = photos
-            };
+            public int ContentId { get; set; }
         }
 
-        [RequestSizeLimit(long.MaxValue)]
-        [HttpPost, Route(RouteUpload)]
-        public async Task<ActionResult<SubmitResult>> Upload([FromQuery] ContentRequest request, [FromForm] IFormFile file)
+        public class GetResult
         {
-            if (!await _authManager.IsSiteAdminAsync(request.SiteId)) return Unauthorized();
-
-            var site = await _siteRepository.GetAsync(request.SiteId);
-
-            if (file == null)
-            {
-                return this.Error("请选择有效的文件上传");
-            }
-
-            var fileName = Path.GetFileName(file.FileName);
-
-            var extName = PathUtils.GetExtension(fileName);
-            if (!_pathManager.IsImageExtensionAllowed(site, extName))
-            {
-                return this.Error("此图片格式已被禁止上传，请转换格式后上传!");
-            }
-
-            var localDirectoryPath = await _pathManager.GetUploadDirectoryPathAsync(site, extName);
-            var localFileName = _pathManager.GetUploadFileName(site, fileName);
-            var filePath = PathUtils.Combine(localDirectoryPath, localFileName);
-
-            await _pathManager.UploadAsync(file, filePath);
-            await _pathManager.AddWaterMarkAsync(site, filePath);
-
-            var photo = await _photoManager.InsertPhotoAsync(site, filePath, request.SiteId, request.ChannelId, request.ContentId);
-
-            photo.LargeUrl = await _pathManager.ParseSiteUrlAsync(site, photo.LargeUrl, true);
-            photo.MiddleUrl = await _pathManager.ParseSiteUrlAsync(site, photo.MiddleUrl, true);
-            photo.SmallUrl = await _pathManager.ParseSiteUrlAsync(site, photo.SmallUrl, true);
-
-            return new SubmitResult
-            {
-                Photo = photo
-            };
+            public List<Photo> Photos { get; set; }
         }
 
-        [HttpPut, Route(Route)]
-        public async Task<ActionResult<BoolResult>> Update([FromBody] UpdateRequest request)
+        public class SubmitResult
         {
-            if (!await _authManager.IsSiteAdminAsync(request.SiteId)) return Unauthorized();
-
-            if (request.Type == "description")
-            {
-                await _photoRepository.UpdateDescriptionAsync(request.PhotoId, request.Description);
-            }
-            else if (request.Type == "taxis")
-            {
-                await _photoRepository.UpdateTaxisAsync(request.PhotoIds);
-            }
-
-            return new BoolResult
-            {
-                Value = true
-            };
+            public Photo Photo { get; set; }
         }
 
-        [HttpDelete, Route(Route)]
-        public async Task<ActionResult<BoolResult>> Delete([FromBody] DeleteRequest request)
+        public class UpdateRequest : ChannelRequest
         {
-            if (!await _authManager.IsSiteAdminAsync(request.SiteId)) return Unauthorized();
+            public int PhotoId { get; set; }
+            public string Type { get; set; }
+            public string Description { get; set; }
+            public List<int> PhotoIds { get; set; }
+        }
 
-            await _photoManager.DeletePhotoAsync(request.SiteId, request.PhotoId);
-
-            return new BoolResult
-            {
-                Value = true
-            };
+        public class DeleteRequest : ChannelRequest
+        {
+            public int PhotoId { get; set; }
         }
     }
 }

@@ -12,6 +12,7 @@ namespace SSCMS.Photos.Core
     {
         public const string PluginId = "sscms.photos";
         public const string PermissionsSettings = "photos_settings";
+        public const string PermissionsContent = "photos_content";
 
         private readonly IPathManager _pathManager;
         private readonly IPluginConfigRepository _pluginConfigRepository;
@@ -28,12 +29,12 @@ namespace SSCMS.Photos.Core
 
         public async Task<Settings> GetSettingsAsync(int siteId)
         {
-            return await _pluginConfigRepository.GetConfigAsync<Settings>(PluginId, siteId) ?? new Settings();
+            return await _pluginConfigRepository.GetAsync<Settings>(PluginId, siteId, "Settings") ?? new Settings();
         }
 
         public async Task<bool> SetSettingsAsync(int siteId, Settings settings)
         {
-            return await _pluginConfigRepository.SetConfigAsync(PluginId, siteId, settings);
+            return await _pluginConfigRepository.SetAsync(PluginId, siteId, "Settings", settings);
         }
 
         public async Task DeletePhotosAsync(int siteId, int channelId, int contentId)

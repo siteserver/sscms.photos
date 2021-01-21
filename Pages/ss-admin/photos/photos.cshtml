@@ -1,7 +1,25 @@
 ﻿@page
 @{ Layout = "_Layout"; }
+@section Styles{
+  <style>
+    #commands div {
+      display: inline-block;
+    }
+    #commands .el-button {
+      margin-bottom: 5px;
+    }
+    #commands .el-button+.el-button {
+      margin-left: 0;
+    }
+  </style>
+}
 
-<el-row align="right">
+<div id="commands">
+
+  <el-button size="small" plain type="primary" icon="el-icon-circle-plus-outline" v-on:click="btnAddClick">
+    手动添加
+  </el-button>
+
   <el-upload
     :action="urlUpload"
     :headers="{Authorization: 'Bearer ' + $token}"
@@ -11,12 +29,13 @@
     :on-error="uploadError"
     :multiple="true"
     :show-file-list="false">
-    <el-button size="small" type="success">
+    <el-button size="small" plain type="primary">
       <i class="el-icon-upload"></i>
-      点击上传
+      一键上传
     </el-button>
   </el-upload>
-</el-row>
+
+</div>
 
 <div style="height: 5px"></div>
 <el-divider></el-divider>
@@ -24,7 +43,7 @@
 
 <el-row>
   <el-col :span="6" v-for="(o, index) in photos" :key="o.id">
-    <el-card style="margin-bottom: 15px; margin-right: 15px; min-height: 305px" :body-style="{ padding: '0px', textAlign: 'center' }">
+    <el-card style="margin-bottom: 15px; margin-right: 15px;" :body-style="{ padding: '0px', textAlign: 'center' }">
       <el-image 
         style="width: 100%; min-height: 120px; max-height:220px;"
         :src="o.smallUrl"
@@ -71,7 +90,8 @@
           <div v-on:click="btnDescriptionClick(o)" style="cursor: pointer; height: 22px; overflow: hidden; font-size: 14px;">{{ o.description }}</div>
         
           <div class="bottom clearfix">
-            <el-button v-on:click="btnDescriptionClick(o)" type="text" size="mini" icon="el-icon-edit" style="margin: 0 5px; color: #9B9B9B;">图片说明</el-button>
+            <el-button v-on:click="btnEditClick(o)" type="text" size="mini" icon="el-icon-edit" style="margin: 0 5px; color: #9B9B9B;">编辑</el-button>
+            <el-button v-on:click="btnDescriptionClick(o)" type="text" size="mini" icon="el-icon-document" style="margin: 0 5px; color: #9B9B9B;">说明</el-button>
             <el-button v-on:click="btnTaxisClick(o, index)" type="text" size="mini" icon="el-icon-sort" style="margin: 0 5px; color: #9B9B9B;">排序</el-button>
             <el-button v-on:click="btnDeleteClick(o)" type="text" size="mini" icon="el-icon-delete" style="margin: 0 5px; color: #9B9B9B;">删除</el-button>
           </div>

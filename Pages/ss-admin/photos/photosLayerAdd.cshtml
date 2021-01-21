@@ -1,0 +1,79 @@
+﻿@page
+@{ Layout = "_Layout"; }
+
+<el-form ref="form" :model="form" label-width="100px" size="small">
+  <el-form-item label="大图" prop="largeUrl" :rules="{ required: true, message: '请输入图片地址或点击上方按钮上传' }">
+    <el-button-group>
+      <el-button size="mini" type="info" icon="el-icon-upload2" plain v-on:click="btnLayerClick({title: '上传图片', name: 'formLayerImageUpload', attributeName: 'largeUrl', no: 0})">
+        上传
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-folder-opened" plain v-on:click="btnLayerClick({title: '选择图片素材', name: 'materialLayerImageSelect', attributeName: 'largeUrl', no: 0, full: true})">
+        选择
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-view" plain :disabled="form.largeUrl ? false : true" v-on:click="btnPreviewClick('largeUrl', 0)">
+        预览
+      </el-button>
+    </el-button-group>
+    <el-input
+      v-model="form.largeUrl"
+      size="small"
+      placeholder="请输入图片地址或点击上方按钮上传">
+    </el-input>
+  </el-form-item>
+  <el-form-item label="中图" prop="middleUrl" :rules="{ required: true, message: '请输入图片地址或点击上方按钮上传' }">
+    <el-button-group>
+      <el-button size="mini" type="info" icon="el-icon-upload2" plain v-on:click="btnLayerClick({title: '上传图片', name: 'formLayerImageUpload', attributeName: 'middleUrl', no: 0})">
+        上传
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-folder-opened" plain v-on:click="btnLayerClick({title: '选择图片素材', name: 'materialLayerImageSelect', attributeName: 'middleUrl', no: 0, full: true})">
+        选择
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-view" plain :disabled="form.middleUrl ? false : true" v-on:click="btnPreviewClick('middleUrl', 0)">
+        预览
+      </el-button>
+    </el-button-group>
+    <el-input
+      v-model="form.middleUrl"
+      size="small"
+      placeholder="请输入图片地址或点击上方按钮上传">
+    </el-input>
+  </el-form-item>
+  <el-form-item label="小图" prop="smallUrl" :rules="{ required: true, message: '请输入图片地址或点击上方按钮上传' }">
+    <el-button-group>
+      <el-button size="mini" type="info" icon="el-icon-upload2" plain v-on:click="btnLayerClick({title: '上传图片', name: 'formLayerImageUpload', attributeName: 'smallUrl', no: 0})">
+        上传
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-folder-opened" plain v-on:click="btnLayerClick({title: '选择图片素材', name: 'materialLayerImageSelect', attributeName: 'smallUrl', no: 0, full: true})">
+        选择
+      </el-button>
+      <el-button size="mini" type="info" icon="el-icon-view" plain :disabled="form.smallUrl ? false : true" v-on:click="btnPreviewClick('smallUrl', 0)">
+        预览
+      </el-button>
+    </el-button-group>
+    <el-input
+      v-model="form.smallUrl"
+      size="small"
+      placeholder="请输入图片地址或点击上方按钮上传">
+    </el-input>
+  </el-form-item>
+  <el-form-item label="说明" prop="description">
+    <el-input
+      v-model="form.description"
+      type="textarea"
+      size="small"
+      rows="5">
+    </el-input>
+  </el-form-item>
+</el-form>
+
+<el-divider></el-divider>
+<el-row align="right" style="margin-right: 5px; margin-top: 10px;">
+  <el-col :span="24" align="right">
+    <el-button size="small" type="primary" v-on:click="btnSubmitClick">确 定</el-button>
+    <el-button size="small" v-on:click="btnCancelClick">取 消</el-button>
+  </el-col>
+</el-row>
+
+@section Scripts{
+  <script src="/assets/photos/js/photosLayerAdd.js" type="text/javascript"></script>
+}

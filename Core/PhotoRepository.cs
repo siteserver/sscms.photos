@@ -25,6 +25,11 @@ namespace SSCMS.Photos.Core
             return photoInfo.Id;
         }
 
+        public async Task UpdateAsync(Photo photo)
+        {
+            await _repository.UpdateAsync(photo);
+        }
+
         public async Task UpdateDescriptionAsync(int photoId, string description)
         {
             await _repository.UpdateAsync(Q

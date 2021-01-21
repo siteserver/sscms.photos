@@ -1,12 +1,10 @@
-﻿using System.Threading.Tasks;
-using Microsoft.AspNetCore.Authorization;
+﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using SSCMS.Configuration;
 using SSCMS.Dto;
 using SSCMS.Photos.Abstractions;
-using SSCMS.Photos.Core;
+using SSCMS.Photos.Models;
 using SSCMS.Services;
-using SSCMS.Utils;
 
 namespace SSCMS.Photos.Controllers.Admin
 {
@@ -25,36 +23,16 @@ namespace SSCMS.Photos.Controllers.Admin
             _photoManager = photoManager;
         }
 
-        [HttpGet, Route(Route)]
-        public async Task<ActionResult<GetResult>> Get([FromQuery] SiteRequest request)
+        public class GetResult
         {
-            if (!await _authManager.HasSitePermissionsAsync(request.SiteId, PhotoManager.PermissionsSettings))
-                return Unauthorized();
-
-            var settings = await _photoManager.GetSettingsAsync(request.SiteId);
-
-            return new GetResult
-            {
-                Settings = settings
-            };
+            public Settings Settings { get; set; }
         }
 
-        [HttpPost, Route(Route)]
-        public async Task<ActionResult<BoolResult>> Submit([FromBody] SubmitRequest request)
+        public class SubmitRequest : SiteRequest
         {
-            if (!await _authManager.HasSitePermissionsAsync(request.SiteId, PhotoManager.PermissionsSettings))
-                return Unauthorized();
+            public int PhotoSmallWidth { get; set; }
 
-            var settings = await _photoManager.GetSettingsAsync(request.SiteId);
-            settings.PhotoSmallWidth = request.PhotoSmallWidth;
-            settings.PhotoMiddleWidth = request.PhotoMiddleWidth;
-
-            await _photoManager.SetSettingsAsync(request.SiteId, settings);
-
-            return new BoolResult
-            {
-                Value = true
-            };
+            public int PhotoMiddleWidth { get; set; }
         }
     }
 }

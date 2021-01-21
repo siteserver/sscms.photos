@@ -8,6 +8,8 @@ namespace SSCMS.Photos.Abstractions
     {
         Task<int> InsertAsync(Photo photoInfo);
 
+        Task UpdateAsync(Photo photo);
+
         Task UpdateDescriptionAsync(int photoId, string description);
 
         Task UpdateTaxisAsync(List<int> photoIds);
