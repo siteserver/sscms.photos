@@ -9,7 +9,8 @@ namespace SSCMS.Photos.Controllers.Admin
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetResult>> Get([FromQuery] ContentRequest request)
         {
-            if (!await _authManager.HasChannelPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent)) return Unauthorized();
+            if (!await _authManager.HasContentPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent))
+                return Unauthorized();
 
             var site = await _siteRepository.GetAsync(request.SiteId);
 

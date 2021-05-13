@@ -10,7 +10,8 @@ namespace SSCMS.Photos.Controllers.Admin
         [HttpPut, Route(Route)]
         public async Task<ActionResult<BoolResult>> Update([FromBody] UpdateRequest request)
         {
-            if (!await _authManager.HasChannelPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent)) return Unauthorized();
+            if (!await _authManager.HasContentPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent))
+                return Unauthorized();
 
             if (request.Type == "description")
             {

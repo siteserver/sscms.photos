@@ -14,7 +14,8 @@ namespace SSCMS.Photos.Controllers.Admin
         [HttpPost, Route(RouteUpload)]
         public async Task<ActionResult<SubmitResult>> Upload([FromQuery] ContentRequest request, [FromForm] IFormFile file)
         {
-            if (!await _authManager.HasChannelPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent)) return Unauthorized();
+            if (!await _authManager.HasContentPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent))
+                return Unauthorized();
 
             var site = await _siteRepository.GetAsync(request.SiteId);
 

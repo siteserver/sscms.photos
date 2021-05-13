@@ -1,5 +1,6 @@
 ﻿using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using SSCMS.Photos.Core;
 using SSCMS.Photos.Models;
 
 namespace SSCMS.Photos.Controllers.Admin
@@ -9,7 +10,8 @@ namespace SSCMS.Photos.Controllers.Admin
         [HttpGet, Route(Route)]
         public async Task<ActionResult<GetResult>> Get([FromQuery] GetRequest request)
         {
-            if (!await _authManager.IsSiteAdminAsync(request.SiteId)) return Unauthorized();
+            if (!await _authManager.HasContentPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent))
+                return Unauthorized();
 
             var site = await _siteRepository.GetAsync(request.SiteId);
             var siteUrl = await _pathManager.GetSiteUrlAsync(site, true);
