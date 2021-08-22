@@ -27,7 +27,7 @@ namespace SSCMS.Photos.Core
         private const string AttributeFormatString = "formatString";
         private const string AttributeStartIndex = "startIndex";
         private const string AttributeLength = "length";
-		private const string AttributeWordNum = "wordNum";
+        private const string AttributeWordNum = "wordNum";
         private const string AttributeEllipsis = "ellipsis";
         private const string AttributeReplace = "replace";
         private const string AttributeTo = "to";
