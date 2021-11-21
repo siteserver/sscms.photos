@@ -7,7 +7,7 @@ namespace SSCMS.Photos.Controllers.Admin
 {
     public partial class PhotosController
     {
-        [HttpPut, Route(Route)]
+        [HttpPost, Route(RouteUpdate)]
         public async Task<ActionResult<BoolResult>> Update([FromBody] UpdateRequest request)
         {
             if (!await _authManager.HasContentPermissionsAsync(request.SiteId, request.ChannelId, PhotoManager.PermissionsContent))

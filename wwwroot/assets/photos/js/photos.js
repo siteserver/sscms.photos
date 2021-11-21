@@ -1,4 +1,6 @@
 var $url = '/photos/photos';
+var $urlUpdate = $url + '/actions/update';
+var $urlDelete = $url + '/actions/delete';
 
 var data = utils.init({
   siteId: utils.getQueryInt('siteId'),
@@ -39,12 +41,10 @@ var methods = {
     var $this = this;
 
     utils.loading(this, true);
-    $api.delete($url, {
-      data: {
-        siteId: this.siteId,
-        channelId: this.channelId,
-        photoId: photo.id
-      }
+    $api.post($urlDelete, {
+      siteId: this.siteId,
+      channelId: this.channelId,
+      photoId: photo.id
     }).then(function (response) {
       var res = response.data;
 
@@ -58,9 +58,9 @@ var methods = {
 
   apiUpdateDescription: function (photo) {
     var $this = this;
-    
+
     utils.loading(this, true);
-    $api.put($url, {
+    $api.post($urlUpdate, {
       siteId: this.siteId,
       channelId: this.channelId,
       photoId: photo.id,
@@ -79,9 +79,9 @@ var methods = {
 
   apiUpdateTaxis: function (photo, photoIds) {
     var $this = this;
-    
+
     utils.loading(this, true);
-    $api.put($url, {
+    $api.post($urlUpdate, {
       siteId: this.siteId,
       channelId: this.channelId,
       photoId: photo.id,
@@ -220,7 +220,7 @@ var methods = {
       utils.error('图片简介不能为空');
       return false;
     }
-    
+
     this.descriptionId = 0;
     if (photo.description === this.description) return false;
     photo.description = this.description;

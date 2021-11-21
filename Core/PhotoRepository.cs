@@ -123,27 +123,5 @@ namespace SSCMS.Photos.Core
                        .Where(nameof(Photo.ContentId), contentId)
                    ) ?? 0;
         }
-
-        //public int GetSiblingContentId(string tableName, int channelId, int taxis, bool isNextContent)
-        //{
-        //    var contentRepository = new Repository(Context.Environment.Dataawait _repository, tableName);
-
-        //    var contentId = 0;
-        //    var sqlString = Context.Dataawait _repositoryApi.GetPageSqlString(tableName, nameof(IContentInfo.Id), $"WHERE ({nameof(IContentInfo.ChannelId)} = {channelId} AND {nameof(IContentInfo.Taxis)} > {taxis} AND {nameof(IContentInfo.IsChecked)} = '{true}')", $"ORDER BY {nameof(IContentInfo.Taxis)}", 0, 1);
-        //    if (isNextContent)
-        //    {
-        //        sqlString = Context.Dataawait _repositoryApi.GetPageSqlString(tableName, nameof(IContentInfo.Id), $"WHERE ({nameof(IContentInfo.ChannelId)} = {channelId} AND {nameof(IContentInfo.Taxis)} < {taxis} AND {nameof(IContentInfo.IsChecked)} = '{true}')", $"ORDER BY {nameof(IContentInfo.Taxis)} DESC", 0, 1);
-        //    }
-
-        //    using (var rdr = Context.Dataawait _repositoryApi.ExecuteReader(Context.ConnectionString, sqlString))
-        //    {
-        //        if (rdr.Read() && !rdr.IsDBNull(0))
-        //        {
-        //            contentId = Context.Dataawait _repositoryApi.GetInt(rdr, 0);
-        //        }
-        //        rdr.Close();
-        //    }
-        //    return contentId;
-        //}
     }
 }

@@ -15,7 +15,9 @@ namespace SSCMS.Photos.Controllers.Admin
     public partial class PhotosController : ControllerBase
     {
         private const string Route = "photos/photos";
+        private const string RouteUpdate = "photos/photos/actions/update";
         private const string RouteUpload = "photos/photos/actions/upload";
+        private const string RouteDelete = "photos/photos/actions/delete";
 
         private readonly IAuthManager _authManager;
         private readonly IPathManager _pathManager;
