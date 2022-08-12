@@ -88,7 +88,7 @@ var slide_data = {
 
             var taxis = content.Taxis;
             var contentTableName = await _channelRepository.GetTableNameAsync(site, context.ChannelId);
-            var siblingContentId = await _contentRepository.GetContentIdAsync(contentTableName, context.ChannelId, taxis, true);
+            var siblingContentId = await _contentRepository.GetContentIdAsync(contentTableName, site.Id, context.ChannelId, taxis, true);
 
             if (siblingContentId > 0)
             {
@@ -105,7 +105,7 @@ var slide_data = {
             }
 
             //siblingContentId = BaiRongDataProvider.ContentDao.GetContentId(pageInfo.PublishmentSystemInfo.AuxiliaryTableForContent, contentInfo.ChannelId, contentInfo.Taxis, false);
-            siblingContentId = await _contentRepository.GetContentIdAsync(contentTableName, content.ChannelId,
+            siblingContentId = await _contentRepository.GetContentIdAsync(contentTableName, content.SiteId, content.ChannelId,
                 content.Taxis, false);
 
             if (siblingContentId > 0)
