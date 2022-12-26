@@ -32,6 +32,7 @@ namespace SSCMS.Photos.Core
         private const string AttributeReplace = "replace";
         private const string AttributeTo = "to";
         private const string AttributeIsClearTags = "isClearTags";
+        private const string AttributeIsClearBlank = "isClearBlank";
         private const string AttributeIsReturnToBr = "isReturnToBr";
         private const string AttributeIsLower = "isLower";
         private const string AttributeIsUpper = "isUpper";
@@ -57,6 +58,7 @@ namespace SSCMS.Photos.Core
             var replace = string.Empty;
             var to = string.Empty;
             var isClearTags = false;
+            var isClearBlank = false;
             var isReturnToBr = false;
             var isLower = false;
             var isUpper = false;
@@ -111,6 +113,10 @@ namespace SSCMS.Photos.Core
                 {
                     isClearTags = TranslateUtils.ToBool(value, false);
                 }
+                else if (attributeName.Equals(AttributeIsClearBlank))
+                {
+                    isClearBlank = TranslateUtils.ToBool(value, false);
+                }
                 else if (attributeName.Equals(AttributeIsReturnToBr))
                 {
                     isReturnToBr = TranslateUtils.ToBool(value, false);
@@ -128,7 +134,7 @@ namespace SSCMS.Photos.Core
             return !TryGetContextItem(context, out var photo, out var itemIndex)
                 ? string.Empty
                 : await ParseImplAsync(context, photo, itemIndex, leftText, rightText, formatString, startIndex, length, wordNum,
-                    ellipsis, replace, to, isClearTags, isReturnToBr, isLower, isUpper, type);
+                    ellipsis, replace, to, isClearTags, isClearBlank, isReturnToBr, isLower, isUpper, type);
         }
 
         public static void SetContextItem(IParseContext context, Photo photo, int itemIndex)
@@ -145,7 +151,7 @@ namespace SSCMS.Photos.Core
             return photo != null && itemIndex > 0;
         }
 
-        private async Task<string> ParseImplAsync(IParseStlContext context, Photo photo, int itemIndex, string leftText, string rightText, string formatString, int startIndex, int length, int wordNum, string ellipsis, string replace, string to, bool isClearTags, bool isReturnToBr, bool isLower, bool isUpper, string type)
+        private async Task<string> ParseImplAsync(IParseStlContext context, Photo photo, int itemIndex, string leftText, string rightText, string formatString, int startIndex, int length, int wordNum, string ellipsis, string replace, string to, bool isClearTags, bool isClearBlank, bool isReturnToBr, bool isLower, bool isUpper, string type)
         {
             var parsedContent = string.Empty;
 
@@ -207,7 +213,7 @@ namespace SSCMS.Photos.Core
 
             if (!string.IsNullOrEmpty(parsedContent))
             {
-                parsedContent = StringUtils.ParseString(parsedContent, replace, to, startIndex, length, wordNum, ellipsis, isClearTags, isReturnToBr, isLower, isUpper, formatString);
+                parsedContent = StringUtils.ParseString(parsedContent, replace, to, startIndex, length, wordNum, ellipsis, isClearTags, isClearBlank, isReturnToBr, isLower, isUpper, formatString);
 
                 if (!string.IsNullOrEmpty(parsedContent))
                 {
