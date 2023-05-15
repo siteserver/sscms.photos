@@ -36,7 +36,7 @@ namespace SSCMS.Photos.Core
             if (photos == null || photos.Count == 0) return string.Empty;
 
             var sGifUrl = _pathManager.GetRootUrl("/assets/photos/lib/slide/s.gif");
-            var jqueryUrl = _pathManager.GetRootUrl("/assets/photos/lib/slide/js/jquery-1.9.1.min.js");
+            var jqueryUrl = _pathManager.GetRootUrl("/assets/photos/lib/slide/js/jquery-3.6.4.min.js");
             var swfobjectUrl = _pathManager.GetRootUrl("/assets/photos/lib/slide/js/swfobject.js");
             var fullScreenSwf = _pathManager.GetRootUrl("/assets/photos/lib/slide/fullscreen.swf");
             var js = _pathManager.GetRootUrl("/assets/photos/lib/slide/script.js");
