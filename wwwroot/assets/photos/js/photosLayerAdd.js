@@ -98,7 +98,8 @@ var methods = {
   btnLayerClick: function(options) {
     var query = {
       siteId: this.siteId,
-      channelId: this.channelId
+      channelId: this.channelId,
+      inputType: 'Image'
     };
 
     if (options.contentId) {

@@ -2,11 +2,11 @@
   "name": "photos",
   "displayName": "内容相册插件",
   "description": "SSCMS 内容相册插件能够实现内容相册功能",
-  "version": "1.2.1",
+  "version": "1.3.0",
   "license": "AGPL-3.0",
   "publisher": "sscms",
   "engines": {
-    "sscms": "^7.2.1"
+    "sscms": "^7.3.0"
   },
   "categories": [
     "Other"
