@@ -129,9 +129,9 @@ var methods = {
       return false;
     }
 
-    var isLt10M = file.size / 1024 / 1024 < 10;
-    if (!isLt10M) {
-      utils.error('上传图片大小不能超过 10MB!');
+    var isLt1024M = file.size / 1024 / 1024 < 1024;
+    if (!isLt1024M) {
+      utils.error('上传图片大小不能超过 1024 MB!');
       return false;
     }
     return true;
